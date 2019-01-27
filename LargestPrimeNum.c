@@ -1,41 +1,37 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
 
-int* findFactor(int x);
-int primeCheck(int x);
+typedef enum boolean{False=0, True} Boolean;
+
+void findFactor(double from, double x);
+Boolean primeCheck(double x);
 
 main()
 {
-    findFactor(10);
+    printf("Start!\n");
+    findFactor(5 ,600851475143);
+    printf("End!\n");
+
 }
 
-int* findFactor(int x)
+void findFactor(double from, double x)
 {
-    int i = 1;
-    int count = 0;
-    int *factors_ptr = malloc(sizeof(int));
-    int *tmp = factors_ptr;
-    
-    while(i <= x)
+    while(from++ <= x)
     {
-        if( !(x%i) )
-        {
-            *tmp = i;
-            count++;
-            factors_ptr = (int *)realloc(factors_ptr, count*sizeof(int));
-            tmp++;
-            *tmp = NULL;
-        }
-        i++;
+        if ( !fmod(x, from) )
+            if (primeCheck(from))
+                printf("%lf\n", from);
     }
-    
     printf("\n");
-    i=0;
-    
-    while(i <= count)
-    {
-        printf("%d ", factors_ptr[i]);
-        i++;
-    }
-    
-    return factors_ptr;
+}
+
+Boolean primeCheck(double x)
+{
+   long i;
+
+   for(i = 2; i < sqrt(x); i++)
+    if (!fmod(x,i)) return False;
+   return True;
+
 }
